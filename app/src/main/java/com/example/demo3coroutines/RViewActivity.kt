@@ -1,13 +1,10 @@
 package com.example.demo3coroutines
 
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_r_view.*
-import kotlinx.android.synthetic.main.item_row.*
 import kotlinx.coroutines.*
 import kotlin.random.Random
 import kotlin.random.nextInt
@@ -29,7 +26,6 @@ class RViewActivity : AppCompatActivity(), CoroutineScope by CoroutineScope(Disp
             adapter = recyclerViewAdapter
         }
 
-
         btnShowBackground.setOnClickListener(View.OnClickListener {
             GlobalScope.launch {
                 for (i in 1..10) {
@@ -37,15 +33,8 @@ class RViewActivity : AppCompatActivity(), CoroutineScope by CoroutineScope(Disp
                     withContext(Dispatchers.Main) {
                         for (y in 0 until listSize) {
                             recyclerView.findViewHolderForAdapterPosition(y)?.let {
-                                val itemButton: Button = it.itemView?.findViewById(R.id.btnItem)
-                                if ((i % 2 == 0 && itemButton.text.toString()
-                                        .toInt() % 2 == 0) || (i % 2 != 0 && itemButton.text.toString()
-                                        .toInt() % 2 != 0)
-                                ) {
-                                    itemButton.setBackgroundColor(Color.BLUE)
-                                } else {
-                                    itemButton.setBackgroundColor(Color.WHITE)
-                                }
+                                recyclerViewAdapter.changeBackgroundColour(
+                                    recyclerView.findViewHolderForAdapterPosition(y)!!, i)
                             }
                         }
                     }

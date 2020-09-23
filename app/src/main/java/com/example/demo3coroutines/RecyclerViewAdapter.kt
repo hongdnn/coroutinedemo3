@@ -2,13 +2,16 @@ package com.example.demo3coroutines
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.inflate
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.core.content.res.ColorStateListInflaterCompat.inflate
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_r_view.*
 
 class RecyclerViewAdapter(context: Context, list: ArrayList<Int>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -38,9 +41,17 @@ class RecyclerViewAdapter(context: Context, list: ArrayList<Int>) :
         (holder as ViewHolder).bind(position)
     }
 
-    fun addData(dataViews: ArrayList<Int>) {
-        dataList.addAll(dataViews)
-        notifyDataSetChanged()
+
+    fun changeBackgroundColour(viewHolder: RecyclerView.ViewHolder, second: Int) {
+        val itemButton: Button = viewHolder.itemView?.findViewById(R.id.btnItem)
+        if ((second % 2 == 0 && itemButton.text.toString()
+                .toInt() % 2 == 0) || (second % 2 != 0 && itemButton.text.toString()
+                .toInt() % 2 != 0)
+        ) {
+            itemButton.setBackgroundColor(Color.BLUE)
+        } else {
+            itemButton.setBackgroundColor(Color.WHITE)
+        }
     }
 
 }
